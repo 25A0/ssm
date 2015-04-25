@@ -110,14 +110,16 @@ public class Utils
         return -1 ;
     }
     
-    public static boolean isNumberRepr( String s, boolean hexIsDefault )
+    public static boolean isNumberRepr( String s)
     {
-        int radix = hexIsDefault ? 16 : 10 ;
+        int radix = 10;
         int pos = 0 ;
         if ( s.charAt( 0 ) == '-' )
             pos += 1 ;
-        if ( ( ! hexIsDefault ) && s.regionMatches( pos, hexReprPrefix, 0, 2 ) )
+        if ( s.regionMatches( pos, hexReprPrefix, 0, 2 ) ) {
             pos += 2 ;
+            radix = 16;
+        }
         int max = s.length() ;
         for( ; pos < max ; pos++ )
         {
@@ -128,9 +130,9 @@ public class Utils
         return true ;
     }
     
-    public static int fromHex( String s, boolean hexIsDefault )
+    public static int fromHex( String s)
     {
-        int radix = hexIsDefault ? 16 : 10 ;
+        int radix = 10 ;
         int res = 0 ;
         int pos = 0 ;
         int sign = 1 ;
@@ -139,7 +141,7 @@ public class Utils
             pos += 1 ;
             sign = -1 ;
         }
-        if ( ( ! hexIsDefault ) && s.regionMatches( pos, hexReprPrefix, 0, 2 ) )
+        if ( s.regionMatches( pos, hexReprPrefix, 0, 2 ) )
         {
             pos += 2 ;
             radix = 16 ;
@@ -154,11 +156,6 @@ public class Utils
             res = res * radix + d ;
         }
         return res * sign ;
-    }
-    
-    public static int fromHex( String s )
-    {
-        return fromHex( s, true ) ;
     }
     
     public static String repeat( String s, int l )

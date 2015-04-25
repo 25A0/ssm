@@ -485,9 +485,9 @@ public class CodeTableModel extends AbstractTableModel
                 {
                     String s = instrNArgs.elementAt( arg + 1 ) ;
                     int val ;
-                    if ( Utils.isNumberRepr( s, false ) )
+                    if ( Utils.isNumberRepr( s ) )
                     {
-                        val = Utils.fromHex( s, false ) ;
+                        val = Utils.fromHex( s ) ;
                     }
                     else
                     {
