@@ -89,6 +89,7 @@ public class SSMRunner extends JFrame
     private Runner              runner                  ;
     private StepManager			stepManager				;
     private int					setupState				;
+    private boolean				useSTDIO				;
     
     private Help		        helper            		;
     
@@ -143,7 +144,7 @@ public class SSMRunner extends JFrame
 	private JMenu jMenuLookAndFeel = new JMenu() ;
 	private JMenu jMenuPrefs = new JMenu() ;
 
-	public SSMRunner( Runner runner )
+	public SSMRunner( Runner runner, boolean useSTDIO )
 	{
 		setupState = SETUP_BUSY ;
 		machineState = new MachineState( 5000, 2000, this ) ; // TBD: automatic increase with reasonable increments
@@ -157,6 +158,7 @@ public class SSMRunner extends JFrame
 	    
 	    stopContinuouslyDoingSteps() ;
 	    this.runner = runner ;
+	    this.useSTDIO = useSTDIO;
 	    
 	    recentLoadedFile = null ;
 	    
@@ -651,15 +653,24 @@ public class SSMRunner extends JFrame
         stepManager.endForwardStep() ;
 	}
 
+	public boolean isHalted()
+	{
+		return machineState.isHalted();
+	}
+
 	public void println( String s )
 	{
 	    outputTextArea.append( s ) ;
 	    outputTextArea.append( "\n" ) ;
+	    if ( useSTDIO )
+	        System.out.println(s);
 	}
 
 	public void print( String s )
 	{
 	    outputTextArea.append( s ) ;
+	    if ( useSTDIO )
+	        System.out.print(s);
 	}
 
     public int promptInt()
